@@ -15,7 +15,7 @@ app = Flask(__name__)
 def generate():
     keyword = request.args.get("keyword")
     if not keyword:
-        return jsonify({"message": "Missing 'keyword' parameter"}), 400
+        return jsonify({"error": "Missing 'keyword' parameter"}), 400
 
     try:
         post = (

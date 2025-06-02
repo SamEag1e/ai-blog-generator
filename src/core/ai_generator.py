@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-from core.utils import inject_urls_to_post
+from core.utils import inject_urls_to_post, has_placeholder
 
 
 def generate_blog_post(keyword: str, api_key: str) -> str:
@@ -29,17 +29,27 @@ def generate_blog_post(keyword: str, api_key: str) -> str:
         max_tokens=800,  # Upper limit of response length
     )
     post = response.choices[0].message.content
+    updated_post = inject_urls_to_post(post)
 
-    return inject_urls_to_post(post)
+    if has_placeholder(updated_post):
+        raise ValueError("Unreplaced affiliate link placeholder found in post")
+
+    return updated_post
 
 
 def generate_mock_blog_post(keyword: str) -> str:
-    return f"""
-            <h1>Best {keyword.capitalize()} for 2025</h1>
-            <p>Looking for top {keyword}? Here's a detailed guide on the best {keyword} options available this year.</p>
-            <ul>
-                <li><a href="https://aff-link.com/1">{{AFF_LINK_1}}</a></li>
-                <li><a href="https://aff-link.com/2">{{AFF_LINK_2}}</a></li>
-            </ul>
-            <p>Make sure to choose what fits your needs and budget!</p>
-            """
+    post = """
+        <h1>Best {keyword} for 2025</h1>
+        <p>Looking for top {keyword}? Here's a detailed guide on the
+        best {keyword} options available this year.</p>
+        <ul>
+            <li><a href="{{{{AFF_LINK_1}}}}">Item 1</a></li>
+            <li><a href="{{{{AFF_LINK_2}}}}">Item 2</a></li>
+            <li><a href="{{{{AFF_LINK_3}}}}">Item 3</a></li>
+        </ul>
+        <p>Make sure to choose what fits your needs and budget!</p>
+    """.format(
+        keyword=keyword.capitalize()
+    )
+
+    return inject_urls_to_post(post)

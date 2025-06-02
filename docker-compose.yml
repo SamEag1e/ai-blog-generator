@@ -12,6 +12,8 @@ services:
     container_name: bloggen_scheduler
     depends_on:
       - web
+    volumes:
+      - ./generated:app/generated
     command: >
       sh -c '
         while true; do

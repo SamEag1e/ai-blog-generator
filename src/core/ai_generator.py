@@ -1,5 +1,7 @@
 from openai import OpenAI
 
+from core.utils import inject_urls_to_post
+
 
 def generate_blog_post(keyword: str, api_key: str) -> str:
     if not api_key:
@@ -27,9 +29,8 @@ def generate_blog_post(keyword: str, api_key: str) -> str:
         max_tokens=800,  # Upper limit of response length
     )
     post = response.choices[0].message.content
-    # Replace those blocks with url
 
-    return post
+    return inject_urls_to_post(post)
 
 
 def generate_mock_blog_post(keyword: str) -> str:

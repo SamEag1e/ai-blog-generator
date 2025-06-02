@@ -29,8 +29,12 @@ def generate_blog_post(keyword: str, api_key: str) -> str:
         max_tokens=800,  # Upper limit of response length
     )
     post = response.choices[0].message.content
+    # Inject dummy URLs for all affiliate
+    # placeholders (e.g., {{AFF_LINK_1}}) to simulate real links.
     updated_post = inject_urls_to_post(post)
 
+    # Then verify no placeholders remain un-replaced —
+    # if so, raise an error.
     if has_placeholder(updated_post):
         raise ValueError("Unreplaced affiliate link placeholder found in post")
 

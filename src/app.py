@@ -3,6 +3,7 @@ import logging
 from flask import Flask, request, jsonify
 
 from core.ai_generator import generate_blog_post, generate_mock_blog_post
+from core.seo_fetcher import get_keyword_data_mock
 from config.cfg import settings
 
 DEBUG = settings.DEBUG
@@ -32,6 +33,15 @@ def generate():
     except Exception:
         logger.exception("Unexpected error during blog post generation")
         raise
+
+
+@app.route("/seo-data")
+def seo_data():
+    keyword = request.args.get("keyword")
+    if not keyword:
+        return jsonify({"error": "Missing 'keyword' parameter"}), 400
+
+    return jsonify({"result": get_keyword_data_mock(keyword)})
 
 
 if __name__ == "__main__":

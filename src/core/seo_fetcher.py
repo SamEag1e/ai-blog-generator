@@ -7,6 +7,7 @@ import httpx
 def get_keyword_data_mock(keyword: str) -> Dict[str, str | List[str]]:
     return {
         "keyword": keyword,
+        "mocked": True,
         "search_volume": "12,000",
         "competition": "Medium",
         "cpc": "$1.45",
@@ -27,7 +28,7 @@ def get_keyword_data_real(
         "Real keyword data fetching not implemented yet."
     )
 
-    if not api_key:
+    if not api_key:  # pylint: disable=W0101
         raise ValueError("SEO_DATA_API_KEY is required")
 
     url = "https://some-keyword-api.com/search"

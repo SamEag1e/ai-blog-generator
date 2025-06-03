@@ -5,6 +5,8 @@ services:
     container_name: bloggen_web
     ports:
       - "5000:5000"
+    env_file:
+      - .env
 
   scheduler:
     build:
@@ -12,15 +14,19 @@ services:
     container_name: bloggen_scheduler
     depends_on:
       - web
+    env_file:
+      - .env
     volumes:
-      - ./generated:app/generated
+      - ./generated:/app/generated
     command: >
       sh -c '
+        echo "[scheduler] Waiting 10s for web service..."
+        sleep 10
         while true; do
           echo "[scheduler] Running daily generation..."
           KEYWORD="wireless earbuds"
-          ENCODED=$(echo "$KEYWORD" | jq -sRr @uri)
-          curl -s "http://web:5000/generate?keyword=$ENCODED" -o "/app/generated/$(date +%F).json"
+          ENCODED=$$(echo "$$KEYWORD" | jq -sRr @uri)
+          curl -s "http://web:5000/generate?keyword=$$ENCODED" -o "/app/generated/$$(date +%F).json"
           echo "[scheduler] Done. Sleeping for 24h."
           sleep 86400
         done

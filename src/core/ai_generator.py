@@ -10,14 +10,17 @@ def generate_blog_post(keyword: str, api_key: str) -> str:
     client = OpenAI(api_key=api_key)
     prompt = (
         f"Write a full blog post in **HTML format** about '{keyword}' for SEO purposes. "
-        f"Structure it with a <h1> title, a short <p> intro paragraph, "
+        f"Structure it properly with a <h1> title, a short <p> intro paragraph, "
         "2-3 <h2> sections with their content, and embed 2-3 affiliate links using "
         "{{AFF_LINK_1}} and {{AFF_LINK_2}} as href values. "
-        "Do not replace the placeholders — just include them as-is."
+        "<a href='{{AFF_LINK_1}}'>SomeThing</a> format. "
+        "Do not replace the placeholders — just include them as-is. "
+        "Do NOT format the response with excessive newlines or indentation—return it in a compact, single-line HTML format. "
+        "Make sure the final response is only the raw HTML, without any explanations or markdown syntax."
     )
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",  # gpt-4.1, gpt-4-turbo, ...
+        model="gpt-4-turbo",  # gpt-4.1, gpt-4-turbo, gpt-3.5-turbo ...
         messages=[
             {
                 "role": "system",

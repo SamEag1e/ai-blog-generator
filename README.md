@@ -1,4 +1,4 @@
-# ai-blog-generator-interview-samad-taghinejad
+# ai-blog-generator
 
 Generate SEO-friendly blog posts using OpenAI (or mocked data) and schedule daily generations with ease. Supports Dockerized or manual execution.
 

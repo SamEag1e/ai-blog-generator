@@ -4,7 +4,7 @@ Generate SEO-friendly blog posts using OpenAI (or mocked data) and schedule dail
 
 ---
 
-## ⚙️ Setup
+## Setup
 
 Before anything, create a `.env` file at the root:
 
@@ -19,7 +19,7 @@ OPEN_AI_API_KEY=your-open-ai-api-key
 
 ---
 
-## 🚀 1. Run with Docker (recommended)
+## 1. Run with Docker (recommended)
 
 ```bash
 docker compose up --build -d
@@ -38,7 +38,7 @@ You’ll find generated posts inside the `generated/` folder (auto-mounted from 
 
 ---
 
-## 🐧 3. Manual Run (Linux/macOS)
+## 3. Manual Run (Linux/macOS)
 
 ### Step 1 — Set up environment
 
@@ -75,7 +75,7 @@ Add:
 
 ---
 
-## 🪟 2. Manual Run (Windows)
+## 2. Manual Run (Windows)
 
 ### Step 1 — Set up environment
 
@@ -100,7 +100,7 @@ powershell -ExecutionPolicy Bypass -File scripts\generate_daily.ps1
 
 ---
 
-## 📂 Folder Structure
+## Folder Structure
 
 ```
 project-root/
@@ -124,7 +124,7 @@ project-root/
 
 ---
 
-## ✅ Summary
+## Summary
 
 | Mode    | Server       | Scheduler         | Notes               |
 | ------- | ------------ | ----------------- | ------------------- |
